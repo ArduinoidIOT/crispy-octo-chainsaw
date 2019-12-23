@@ -1,0 +1,134 @@
+*, *::after, *::before{
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #222222;
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+}
+
+i {
+  padding-right: 50px;
+  padding-left: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 15px;
+  color: white;
+}
+
+i:first-of-type {
+  padding-left: 20px;
+}
+
+.led-control {
+  background: #ff9900;
+  height: 50px;
+  width: 50px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  margin-right: 30px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.led-control:first-of-type {
+  margin-left: 20px;
+}
+
+.number {
+  color: white;
+}
+
+
+.one {
+  margin-left: 40px;
+}
+
+.two {
+  margin-left: 73px;
+}
+
+.three {
+  margin-left: 70px;
+}
+
+.four {
+  margin-left: 73px;
+}
+
+.five {
+  margin-left: 71px;
+}
+
+.six {
+  margin-left: 72px;
+}
+
+.seven {
+  margin-left: 72px;
+}
+
+.eight {
+  margin-left: 73px;
+}
+
+.ten {
+  margin-left: 66px;
+}
+
+.eleven {
+  margin-left: 64px;
+}
+
+.twelve {
+  margin-left: 64px;
+}
+
+.thirteen {
+  margin-left: 64px;
+}
+
+.fourteen {
+  margin-left: 63px;
+}
+
+.fifteen {
+  margin-left: 64px;
+}
+
+.sixteen {
+  margin-left: 64px;
+}
+
+.animation {
+  color: white;
+  border-radius: 100px;
+  border: none;
+  padding-left: 35px;
+  padding-right: 35px;
+  padding-top: 13px;
+  padding-bottom: 13px;
+  margin-right: 26px;
+  background: linear-gradient(to right, #ff9900, #ff3c3c, #ff0092);
+}
+
+.animation:first-of-type {
+  margin-left: 25px;
+}
+
+.wrapper {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+#wrapper {
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
