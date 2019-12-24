@@ -5,6 +5,12 @@ from json import dumps
 
 class App(Flask):
     def __init__(self, *args, **kwargs):
+        self.port = '/dev/serial/by-id/usb-Arduino__www.arduino.cc__0043_5573132303635171A0A2-if00' if 'serport' not in kwargs.keys() else \
+            kwargs['serport']
+        try:
+            del kwargs['serport']
+        except KeyError:
+            pass
         super().__init__(*args, **kwargs)
         self.register_error_handler(404, self.index)
         self.add_url_rule('/data/', view_func=self.initializePage)
@@ -15,7 +21,7 @@ class App(Flask):
         self.data = 0
 
     def __enter__(self):
-        self.serial = Serial(port='/dev/serial/by-id/usb-Arduino__www.arduino.cc__0043_5573132303635171A0A2-if00')
+        self.serial = Serial(port=self.port)
         return self
 
     def __exit__(self, exc_type, exc_value, exc_traceback):
@@ -41,7 +47,7 @@ class App(Flask):
     def initializePage(self):
         try:
             self.serial.write(b's' + str(self.data).encode() + b'\n')
-        except (serialutil.SerialException, OSError) :
+        except (serialutil.SerialException, OSError):
             self.serial.close()
             self.serial.open()
             self.serial.write(b's' + str(self.data).encode() + b'\n')
@@ -64,5 +70,5 @@ class App(Flask):
         return ''
 
 
-with App(__name__) as app:
+with App(__name__,serport='/dev/ttyACM0') as app:
     app.run()
