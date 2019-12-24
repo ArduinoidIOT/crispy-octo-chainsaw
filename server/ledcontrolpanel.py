@@ -1,5 +1,5 @@
 from flask import redirect, Flask
-from serial import Serial
+from serial import Serial, serialutil
 from json import dumps
 
 
@@ -39,7 +39,12 @@ class App(Flask):
         return self.initializePage()
 
     def initializePage(self):
-        self.serial.write(b's' + str(self.data).encode() + b'\n')
+        try:
+            self.serial.write(b's' + str(self.data).encode() + b'\n')
+        except (serialutil.SerialException, OSError) :
+            self.serial.close()
+            self.serial.open()
+            self.serial.write(b's' + str(self.data).encode() + b'\n')
         dt = bin(self.data)[2:]
         dt = '0' * (16 - len(dt)) + dt
         dct = {}
@@ -50,7 +55,12 @@ class App(Flask):
     def animation(self, anim):
         if anim[:4] == 'anim':
             anim = anim[4:]
-        self.serial.write(b'a' + anim.encode() + b'\n')
+        try:
+            self.serial.write(b'a' + anim.encode() + b'\n')
+        except (serialutil.SerialException, OSError):
+            self.serial.close()
+            self.serial.open()
+            self.serial.write(b'a' + anim.encode() + b'\n')
         return ''
 
 
