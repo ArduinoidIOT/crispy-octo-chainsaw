@@ -114,10 +114,20 @@ i:first-of-type {
   padding-bottom: 13px;
   margin-right: 26px;
   background: linear-gradient(to right, #ff9900, #ff3c3c, #ff0092);
+  cursor: pointer;
 }
 
 .animation:first-of-type {
   margin-left: 25px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 90vh;
+
 }
 
 .wrapper {

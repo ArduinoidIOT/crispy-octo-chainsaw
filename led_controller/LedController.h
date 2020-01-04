@@ -1,20 +1,25 @@
-#include <Entropy.h> // RNG
-#define sbi(sfr, bt) (_SFR_BYTE(sfr) |= _BV(bt))      //Set bit in reg
-#define cbi(sfr, bt) (_SFR_BYTE(sfr) &= ~(_BV(bt)))   //Clear bit in reg
-#define DDRB_MASK _BV(DDB5) | _BV(DDB3) | _BV(DDB2);  // DDRB mask, Pin 10,11,13 OUTPUT
-#define SPCR_MASK _BV(SPE) | _BV(MSTR) | _BV(DORD);   // SPCR mask, SPE, MSTR, DORD bits set
+#include <Entropy.h>
+extern "C" {
+  // function prototypes
+  void transferState(uint16_t data);  //Send state to 74hc595
+  byte mode;                          //Animation
+  void setup();                       //Setup
+  void beginSerial();                 // Initialize Serial
+  void beginEntropy();                // Initialize Entropy
+  void delay250();                    //Delay function
+}
 // Animations
-uint16_t oscillating[] = {
+const uint16_t oscillating[] = {
   0B1010101010101010,
   0B0101010101010101  
 };
 
-uint16_t flasher[] = {
+const uint16_t flasher[] = {
   0B1111111111111111,
   0B0000000000000000  
 };
 
-uint16_t bouncer[] = {
+const uint16_t bouncer[] = {
   0B0000000000000001,
   0B0000000000000010,
   0B0000000000000100,
@@ -44,11 +49,10 @@ uint16_t bouncer[] = {
   0B0000000000010000,
   0B0000000000001000,
   0B0000000000000100,
-  0B0000000000000010,
-  0B0000000000000001  
+  0B0000000000000010 
 };
 
-uint16_t train[] = {
+const uint16_t train[] = {
   0B0000000000000000,
   0B0000000000000001,
   0B0000000000000011,
@@ -74,13 +78,6 @@ uint16_t train[] = {
   0B1100000000000000,
   0B1000000000000000
 };
-
-uint16_t leds = 0;                    //Led state register
-uint16_t oldleds = 0;                 //LED state register 2
-byte mode = 0;                        //Animation
-unsigned long lastmillis;             //For delay
-unsigned long k;                      // For delay
-bool transaction_in_progress = false; //SPI lock
 char serread;                         // For animation logic
-unsigned long data;                   // For animation logic
-byte counter = 0;                     // For animation
+uint16_t data;                        // For animation logic
+uint8_t counter;                      //For animation
