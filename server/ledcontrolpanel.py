@@ -70,5 +70,5 @@ class App(Flask):
         return ''
 
 
-with App(__name__,serport='/dev/ttyACM0') as app:
+with App(__name__) as app:
     app.run()
